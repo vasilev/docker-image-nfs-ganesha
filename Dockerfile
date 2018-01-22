@@ -4,11 +4,11 @@ MAINTAINER Mitchell Hewes <me@mitcdh.com>
 # install prerequisites
 RUN DEBIAN_FRONTEND=noninteractive \
  && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3FE869A9 \
- && echo "deb http://ppa.launchpad.net/gluster/nfs-ganesha/ubuntu xenial main" > /etc/apt/sources.list.d/nfs-ganesha-2.5.list \
- && echo "deb http://ppa.launchpad.net/gluster/libntirpc/ubuntu xenial main" > /etc/apt/sources.list.d/libntirpc-1.5.list \
- && echo "deb http://ppa.launchpad.net/gluster/glusterfs-3.11/ubuntu xenial main" > /etc/apt/sources.list.d/glusterfs-3.11.list \
+ && echo "deb http://ppa.launchpad.net/gluster/nfs-ganesha-2.5/ubuntu xenial main" > /etc/apt/sources.list.d/nfs-ganesha-2.5.list \
+ && echo "deb http://ppa.launchpad.net/gluster/libntirpc-1.5/ubuntu xenial main" > /etc/apt/sources.list.d/libntirpc-1.5.list \
+ && echo "deb http://ppa.launchpad.net/gluster/glusterfs-3.13/ubuntu xenial main" > /etc/apt/sources.list.d/glusterfs-3.13.list \
  && apt-get update \
- && apt-get install -y netbase nfs-common dbus nfs-ganesha nfs-ganesha-fsal glusterfs-common \
+ && apt-get install -y netbase nfs-common dbus nfs-ganesha glusterfs-common \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
  && mkdir -p /run/rpcbind /export /var/run/dbus \
@@ -24,3 +24,4 @@ EXPOSE 2049 38465-38467 662 111/udp 111
 
 # Start Ganesha NFS daemon by default
 CMD ["/start.sh"]
+

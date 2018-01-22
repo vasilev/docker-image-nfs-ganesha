@@ -12,6 +12,7 @@ set -e
 : ${GANESHA_ROOT_ACCESS:="*"}
 : ${GANESHA_NFS_PROTOCOLS:="3,4"}
 : ${GANESHA_TRANSPORTS:="UDP,TCP"}
+: ${GANESHA_BOOTSTRAP_CONFIG:="yes"}
 
 function bootstrap_config {
 	echo "Bootstrapping Ganesha NFS config"
@@ -78,7 +79,11 @@ function startup_script {
 	fi
 }
 
-bootstrap_config
+if [[ "${GANESHA_BOOTSTRAP_CONFIG}" = "yes" ]]
+then
+ bootstrap_config
+fi
+
 bootstrap_export
 startup_script
 

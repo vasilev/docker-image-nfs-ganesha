@@ -18,6 +18,7 @@ Currently generates a config for just serving a local path over nfs. However sup
 * `GANESHA_ROOT_ACCESS`: export root access acl list
 * `GANESHA_NFS_PROTOCOLS`: nfs protocols to support
 * `GANESHA_TRANSPORTS`: nfs transports to support
+* `GANESHA_BOOTSTRAP_CONFIG`: write fresh config file on start
 * `STARTUP_SCRIPT`: location of a shell script to execute on start
 
 #### Environment Placement in Config File

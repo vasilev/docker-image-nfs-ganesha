@@ -8,6 +8,7 @@ set -e
 : ${GANESHA_EPOCH:=""}
 : ${GANESHA_EXPORT_ID:="77"}
 : ${GANESHA_EXPORT:="/export"}
+: ${GANESHA_PSEUDO_PATH:="/"}
 : ${GANESHA_ACCESS:="*"}
 : ${GANESHA_ROOT_ACCESS:="*"}
 : ${GANESHA_NFS_PROTOCOLS:="3,4"}
@@ -27,7 +28,7 @@ EXPORT
 		Path = ${GANESHA_EXPORT};
 
 		# Pseudo Path (for NFS v4)
-		Pseudo = /;
+		Pseudo = ${GANESHA_PSEUDO_PATH};
 
 		# Access control options
 		Access_Type = RW;

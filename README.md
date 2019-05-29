@@ -1,11 +1,11 @@
 # NFS Ganesha
-A user mode nfs server implemented in a container. Supports serving NFS (v3, 4.0, 4.1, 4.1 pNFS, 4.2) and 9P. This container should also be configurable with all of the nfs-ganesha supported FSAL backends.
+A user mode nfs server implemented in a container. Supports serving NFS (v3, 4.0, 4.1, 4.1 pNFS, 4.2) and 9P.
 
-Currently generates a config for just serving a local path over nfs. However supplying `GANESHA_CONFIGFILE` would allow ganesha to be pointed to a bind mounted config file for other FASLs/more advanced configuration.
+This container uses ephemeral in-memory storage (nfs-ganesha-mem) and is intended for tests and experiments only.
 
 ### Versions
-* ganesha: 2.4
-* glusterfs-common: 3.11
+* ganesha: 2.6.0
+* nfs-ganesha-mem
 
 ### Environment Variables
 * `GANESHA_LOGFILE`: log file location
@@ -32,34 +32,23 @@ EXPORT
 		Path = ${GANESHA_EXPORT};
 
 		# Pseudo Path (for NFS v4)
-		Pseudo = /;
+		Pseudo = ${GANESHA_PSEUDO_PATH};
 
 		# Access control options
 		Access_Type = RW;
-		Squash = No_Root_Squash;
-		Root_Access = "${GANESHA_ROOT_ACCESS}";
-		Access = "${GANESHA_ACCESS}";
-
-		# NFS protocol options
-		Transports = "${GANESHA_TRANSPORTS}";
-		Protocols = "${GANESHA_NFS_PROTOCOLS}";
-
-		SecType = "sys";
 
 		# Exporting FSAL
 		FSAL {
-			Name = VFS;
+			Name = MEM;
 		}
 }
 ````
 
 ### Usage
 ```bash
-docker run -d \
---name nfs \
--v /local/export/path:/export \
-mitcdh/nfs-ganesha \
+docker run -d --name nfsd vasilev/nfs-ganesha
 ```
 
 ### Credits
+* [apnar/docker-image-nfs-ganesha](https://github.com/apnar/docker-image-nfs-ganesha)
 * [janeczku/docker-nfs-ganesha](https://github.com/janeczku/docker-nfs-ganesha)

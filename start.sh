@@ -1,8 +1,10 @@
 #!/bin/bash
+# Based on https://github.com/apnar/docker-image-nfs-ganesha
 set -e
 
 # Options for starting Ganesha
 : ${GANESHA_LOGFILE:="/dev/stdout"}
+: ${GANESHA_LOGLEVEL:="DEBUG"}
 : ${GANESHA_CONFIGFILE:="/etc/ganesha/ganesha.conf"}
 : ${GANESHA_OPTIONS:="-N NIV_EVENT"} # NIV_DEBUG
 : ${GANESHA_EPOCH:=""}
@@ -32,20 +34,31 @@ EXPORT
 
 		# Access control options
 		Access_Type = RW;
-		Squash = No_Root_Squash;
-		Root_Access = "${GANESHA_ROOT_ACCESS}";
-		Access = "${GANESHA_ACCESS}";
+        #Squash = No_Root_Squash;
+		#Root_Access = "${GANESHA_ROOT_ACCESS}";
+		#Access = "${GANESHA_ACCESS}";
 
 		# NFS protocol options
-		Transports = "${GANESHA_TRANSPORTS}";
-		Protocols = "${GANESHA_NFS_PROTOCOLS}";
+        #Transports = "${GANESHA_TRANSPORTS}";
+        #Protocols = "${GANESHA_NFS_PROTOCOLS}";
 
-		SecType = "sys";
+        #SecType = "sys";
 
 		# Exporting FSAL
 		FSAL {
-			Name = VFS;
+			Name = MEM;
 		}
+}
+
+LOG {
+        Default_Log_Level = ${GANESHA_LOGLEVEL};
+}
+
+MEM {
+        # This is the size needed to pass pyNFS.  Default is 0
+        Inode_Size = 1114112;
+        # This creates a thread that exercises UP calls
+        UP_Test_Interval = 20;
 }
 
 END

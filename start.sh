@@ -4,16 +4,16 @@ set -e
 
 # Options for starting Ganesha
 : ${GANESHA_LOGFILE:="/dev/stdout"}
-: ${GANESHA_LOGLEVEL:="DEBUG"}
+: ${GANESHA_LOGLEVEL:="EVENT"}
 : ${GANESHA_CONFIGFILE:="/etc/ganesha/ganesha.conf"}
-: ${GANESHA_OPTIONS:="-N NIV_EVENT"} # NIV_DEBUG
+: ${GANESHA_OPTIONS:=""} # "-N NIV_DEBUG"
 : ${GANESHA_EPOCH:=""}
 : ${GANESHA_EXPORT_ID:="77"}
 : ${GANESHA_EXPORT:="/export"}
 : ${GANESHA_PSEUDO_PATH:="/"}
 : ${GANESHA_ACCESS:="*"}
 : ${GANESHA_ROOT_ACCESS:="*"}
-: ${GANESHA_NFS_PROTOCOLS:="3,4"}
+: ${GANESHA_NFS_PROTOCOLS:="4"} # "3,4"
 : ${GANESHA_TRANSPORTS:="UDP,TCP"}
 : ${GANESHA_BOOTSTRAP_CONFIG:="yes"}
 
@@ -40,7 +40,7 @@ EXPORT
 
 		# NFS protocol options
         #Transports = "${GANESHA_TRANSPORTS}";
-        #Protocols = "${GANESHA_NFS_PROTOCOLS}";
+		Protocols = ${GANESHA_NFS_PROTOCOLS};
 
         #SecType = "sys";
 
@@ -52,6 +52,9 @@ EXPORT
 
 LOG {
         Default_Log_Level = ${GANESHA_LOGLEVEL};
+	components {
+		NFS_V4 = FULL_DEBUG;
+	}
 }
 
 MEM {

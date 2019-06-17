@@ -4,8 +4,8 @@ A user mode nfs server implemented in a container. Supports serving NFS (v3, 4.0
 This container uses ephemeral in-memory storage (nfs-ganesha-mem) and is intended for tests and experiments only.
 
 ### Versions
-* ganesha: 2.6.0
-* nfs-ganesha-mem
+* nfs-ganesha: 2.6.0
+* nfs-ganesha-mem: 2.6.0
 
 ### Environment Variables
 * `GANESHA_LOGFILE`: log file location
@@ -19,6 +19,7 @@ This container uses ephemeral in-memory storage (nfs-ganesha-mem) and is intende
 * `GANESHA_NFS_PROTOCOLS`: nfs protocols to support
 * `GANESHA_TRANSPORTS`: nfs transports to support
 * `GANESHA_BOOTSTRAP_CONFIG`: write fresh config file on start
+* `GANESHA_GRACELESS`: disable the NFSv4 grace period (**true** by default)
 * `STARTUP_SCRIPT`: location of a shell script to execute on start
 
 #### Environment Placement in Config File

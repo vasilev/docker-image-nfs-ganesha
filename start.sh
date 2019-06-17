@@ -16,6 +16,7 @@ set -e
 : ${GANESHA_NFS_PROTOCOLS:="3,4"}
 : ${GANESHA_TRANSPORTS:="UDP,TCP"}
 : ${GANESHA_BOOTSTRAP_CONFIG:="yes"}
+: ${GANESHA_GRACELESS:=true}
 
 function bootstrap_config {
 	echo "Bootstrapping Ganesha NFS config"
@@ -48,6 +49,10 @@ EXPORT
 		FSAL {
 			Name = MEM;
 		}
+}
+
+NFSV4 {
+        Graceless = ${GANESHA_GRACELESS};
 }
 
 LOG {

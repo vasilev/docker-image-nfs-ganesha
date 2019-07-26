@@ -35,7 +35,7 @@ EXPORT
 
 		# Access control options
 		Access_Type = RW;
-        #Squash = No_Root_Squash;
+		Squash = None;
 		#Root_Access = "${GANESHA_ROOT_ACCESS}";
 		#Access = "${GANESHA_ACCESS}";
 

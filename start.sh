@@ -6,7 +6,7 @@ set -e
 : ${GANESHA_LOGFILE:="/dev/stdout"}
 : ${GANESHA_LOGLEVEL:="DEBUG"}
 : ${GANESHA_CONFIGFILE:="/etc/ganesha/ganesha.conf"}
-: ${GANESHA_OPTIONS:="-N NIV_EVENT"} # NIV_DEBUG
+: ${GANESHA_OPTIONS:=""}
 : ${GANESHA_EPOCH:=""}
 : ${GANESHA_EXPORT_ID:="77"}
 : ${GANESHA_EXPORT:="/export"}
@@ -47,7 +47,7 @@ EXPORT
 
 		# Exporting FSAL
 		FSAL {
-			Name = MEM;
+			Name = VFS;
 		}
 }
 
@@ -57,13 +57,10 @@ NFSV4 {
 
 LOG {
         Default_Log_Level = ${GANESHA_LOGLEVEL};
-}
 
-MEM {
-        # This is the size needed to pass pyNFS.  Default is 0
-        Inode_Size = 1114112;
-        # This creates a thread that exercises UP calls
-        UP_Test_Interval = 20;
+	    components {
+		    NFS_V4 = FULL_DEBUG;
+	    }
 }
 
 END

@@ -8,7 +8,7 @@ COPY start.sh /
 # Install prerequisites
 RUN DEBIAN_FRONTEND=noninteractive \
  && apt-get update \
- && apt-get install -y netbase nfs-common dbus nfs-ganesha nfs-ganesha-mem \
+ && apt-get install -y netbase nfs-common dbus nfs-ganesha nfs-ganesha-vfs \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
  && mkdir -p /run/rpcbind /export /var/run/dbus \

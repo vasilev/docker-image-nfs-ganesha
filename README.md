@@ -1,11 +1,12 @@
 # NFS Ganesha
 A user mode nfs server implemented in a container. Supports serving NFS (v3, 4.0, 4.1, 4.1 pNFS, 4.2) and 9P.
 
-This container uses ephemeral in-memory storage (nfs-ganesha-mem) and is intended for tests and experiments only.
+This container is intended for tests and experiments only.
+Requires to be started in PRIVILEGED mode.
 
 ### Versions
 * nfs-ganesha: 2.6.0
-* nfs-ganesha-mem: 2.6.0
+* nfs-ganesha-vfs: 2.6.0
 
 ### Environment Variables
 * `GANESHA_LOGFILE`: log file location
@@ -40,14 +41,14 @@ EXPORT
 
 		# Exporting FSAL
 		FSAL {
-			Name = MEM;
+			Name = VFS;
 		}
 }
 ````
 
 ### Usage
 ```bash
-docker run -d --name nfsd vasilev/nfs-ganesha
+docker run --privileged -d --name nfsd vasilev/nfs-ganesha:vfs
 ```
 
 ### Credits

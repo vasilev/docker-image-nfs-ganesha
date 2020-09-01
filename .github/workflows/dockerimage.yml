@@ -26,7 +26,8 @@ jobs:
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
           # Strip "v" prefix from tag name
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-          echo VERSION=$VERSION
-          docker tag vasilev/nfs-ganesha vasilev/nfs-ganesha:$VERSION
-          docker push vasilev/nfs-ganesha:$VERSION
+          TAGGED_IMAGENAME="vasilev/nfs-ganesha:$VERSION--$(date -I)"
+          echo TAGGED_IMAGENAME=$TAGGED_IMAGENAME
+          docker tag vasilev/nfs-ganesha $TAGGED_IMAGENAME
+          docker push $TAGGED_IMAGENAME          
  

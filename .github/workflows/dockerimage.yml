@@ -1,0 +1,32 @@
+name: Build Docker Image
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  # Push image to Package Registry
+  build-and-push:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag vasilev/nfs-ganesha
+
+      - name: Log into registry
+        run: |
+          echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      - name: Push image
+        run: |
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          echo VERSION=$VERSION
+          docker tag vasilev/nfs-ganesha vasilev/nfs-ganesha:$VERSION
+          docker push vasilev/nfs-ganesha:$VERSION
+ 
